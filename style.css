@@ -1,0 +1,13 @@
+#container{
+    margin:auto;
+    height:800px;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid lightgray;
+}
+
+.grid{
+    border: 1px solid rgba(0, 0, 0, 1);
+}
+
