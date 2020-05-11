@@ -5,9 +5,11 @@
     display: flex;
     flex-wrap: wrap;
     border: 1px solid lightgray;
+    background-color:white;
 }
 
 .grid{
     border: 1px solid rgba(0, 0, 0, 1);
 }
+
 

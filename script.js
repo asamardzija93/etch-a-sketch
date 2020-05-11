@@ -2,8 +2,11 @@ let gridSize = prompt('Enter size of grid');
 const container = document.getElementById('container');
 const resetBtn = document.getElementById('resetBtn');
 const colorChange = document.getElementById('chgClr');
+const blkWhite = document.getElementById('blkWhite');
 
+let colors=false;
 
+makeGrid(gridSize);
 
 function makeGrid(gridSize){  
    
@@ -12,6 +15,9 @@ function makeGrid(gridSize){
         let rowCopy = newRow.cloneNode(true);
         container.append(rowCopy);
     }
+    let gridBox = document.getElementsByClassName('grid');
+    
+    colorGrid(gridBox);
 }
 
 function makeRow(gridSize){
@@ -32,24 +38,73 @@ function makeRow(gridSize){
 }
 
 function resetGrid(){
-    let newGrid = prompt('Enter grid size');
-   
     let rows=document.getElementsByClassName('rows');
-    console.log(rows);
-
-    for(let i=0; i < gridSize; i++) {
-       while(rows[i].firstChild){
-            rows[i].removeChild(rows[i].firstChild);
-       }
-    }
+   
         while(container.firstChild){
             container.removeChild(container.firstChild);
         }
 
-  
-    makeGrid(newGrid);
+    gridSize = prompt('What would you like the new grid to be?');
+    makeGrid(gridSize);
 }
 
-makeGrid(gridSize);
 
 resetBtn.addEventListener('click', resetGrid);
+let gridBox = document.getElementsByClassName('grid');
+
+colorChange.addEventListener('click', () =>{
+    colors=true;
+    resetGrid();
+});
+blkWhite.addEventListener('click', () =>{
+    colors=false;
+    resetGrid();
+});
+
+
+
+function colorGrid(gridBox){
+for(let i =0; i < gridSize*gridSize; i++){
+    if(!colors){
+        gridBox[i].addEventListener('mouseover', () =>{
+            /*matches last value of rgba, to get opacity*/
+            let opcValue = gridBox[i].style['background-color'].match(/[^,]+(?=\))/)[0];
+            opcValue=Number(opcValue);
+            if(opcValue===1)
+                return;
+            else{
+                opcValue+=0.1;
+                let newShade = gridBox[i].style['background-color'].replace(/[^,]+(?=\))/, opcValue);
+                gridBox[i].style['background-color'] = newShade;
+            }
+        });
+    }
+    else{
+        gridBox[i].addEventListener('mouseover', () =>{
+        if(gridBox[i].style['background-color'] === 'rgba(0, 0, 0, 0)'){
+            let r=Math.floor(Math.random()*256);
+            let g=Math.floor(Math.random()*256);
+            let b=Math.floor(Math.random()*256);
+          
+            gridBox[i].style['background-color'] = 'rgba('+r+','+g+','+b+',0.1)';    
+        }
+        
+        else{
+            let opcValue = gridBox[i].style['background-color'].match(/[^,]+(?=\))/)[0];
+            opcValue=Number(opcValue);
+
+            if(opcValue===1)
+                return;
+            else{
+                console.log('it gets here');
+                opcValue+=0.1;
+                let newShade = gridBox[i].style['background-color'].replace(/[^,]+(?=\))/, opcValue);
+                gridBox[i].style['background-color'] = newShade;
+            }
+         }
+    });
+    }
+   
+}
+}
+
