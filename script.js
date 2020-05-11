@@ -4,10 +4,11 @@ const resetBtn = document.getElementById('resetBtn');
 const colorChange = document.getElementById('chgClr');
 const blkWhite = document.getElementById('blkWhite');
 
+/*will use to toggle whether working with color boxes or black and white */
 let colors = false;
 
 function makeGrid(gridSize) {
-
+    /*make a row of boxes, and then append that row over and over. Reducing time spent looping*/
     let newRow = makeRow(gridSize);
     for (let j = 0; j < gridSize; j++) {
         let rowCopy = newRow.cloneNode(true);
@@ -56,7 +57,7 @@ function colorGrid(gridBox) {
         }
         else {
             gridBox[i].addEventListener('mouseover', () => {
-                /* if it's a previously untouched box, assing new color to it*/
+                /* if it's a previously untouched box, assign new color to it*/
                 if (gridBox[i].style['background-color'] === 'rgba(0, 0, 0, 0)') {
                     assignColor(gridBox[i]);
                 }
@@ -81,7 +82,7 @@ function assignColor(element) {
 
 
 function changeOpacity(element) {
-
+    /*match function grabs the opacity value of rgba value*/
     let opcValue = element.style['background-color'].match(/[^,]+(?=\))/)[0];
     opcValue = Number(opcValue);
 
